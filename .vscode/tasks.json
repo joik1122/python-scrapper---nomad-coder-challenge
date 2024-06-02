@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate requirements.txt with pipreqs",
+            "type": "shell",
+            "command": "${config:python.pythonPath}/python -m pipreqs . --force",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Generates requirements.txt based on imports in the project."
+        },
+        {
+            "label": "Install dependencies with pipenv",
+            "type": "shell",
+            "command": "pipenv install -r requirements.txt",
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "Generate requirements.txt with pipreqs",
+            "detail": "Installs dependencies from requirements.txt using pipenv."
+        },
+        {
+            "label": "Setup Environment",
+            "type": "shell",
+            "command": "echo 'Setting up environment...'",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "dependsOn": [
+                "Generate requirements.txt with pipreqs",
+                "Install dependencies with pipenv"
+            ],
+            "detail": "Runs pipreqs and then installs dependencies with pipenv."
+        }
+    ]
+}
